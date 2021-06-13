@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html :class="{ 'theme-dark': dark }" x-data="data()">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Blazor + Tailwind</title>
+    <base href="/" />
+    <link href="app.css" rel="stylesheet" />
+    <link href="TailwindOnBlazor.styles.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="app">Loading...</div>
+
+    <div id="blazor-error-ui" style="display: none">
+        An unhandled error has occurred.
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+    <script src="_framework/blazor.webassembly.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <script src="js/init-alpine.js"></script>
+    <!-- You need focus-trap.js to make the modal accessible -->
+    <script src="js/focus-trap.js" defer></script>
+</body>
+
+</html>

@@ -1,0 +1,73 @@
+﻿@page "/fetchdata"
+@inject HttpClient Http
+
+<h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+    Weather forecast
+</h2>
+
+<p class="text-gray-700 dark:text-gray-200">This component demonstrates fetching data from the server.</p>
+<br>
+
+<div class="w-full overflow-hidden rounded-lg shadow-xs">
+    @if (forecasts == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <div class="w-full overflow-x-auto">
+            <table class="w-full whitespace-no-wrap">
+                <thead>
+                    <tr
+                    class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                        <th class="px-4 py-3">Date</th>
+                        <th class="px-4 py-3">Temp. (C)</th>
+                        <th class="px-4 py-3">Temp. (F)</th>
+                        <th class="px-4 py-3">Summary</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                    @foreach (var forecast in forecasts)
+                    {
+                        <tr class="text-gray-700 dark:text-gray-400">
+                            <td class="px-4 py-3">
+                                @forecast.Date.ToShortDateString()
+                            </td>
+                            <td class="px-4 py-3 text-sm">
+                                @forecast.TemperatureC
+                            </td>
+                            <td class="px-4 py-3 text-xs">
+                                @forecast.TemperatureF
+
+                            </td>
+                            <td class="px-4 py-3 text-sm">
+                                @forecast.Summary
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+@code {
+    private WeatherForecast[] forecasts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+    }
+
+    public class WeatherForecast
+    {
+        public DateTime Date { get; set; }
+
+        public int TemperatureC { get; set; }
+
+        public string Summary { get; set; }
+
+        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    }
+}
